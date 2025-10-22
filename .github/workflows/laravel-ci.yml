@@ -1,0 +1,40 @@
+name: Laravel CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  laravel-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Cloner le dépôt
+        uses: actions/checkout@v3
+
+      - name: 🧰 Installer PHP et Composer
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, pdo_mysql
+          coverage: none
+
+      - name: 📦 Installer les dépendances
+        run: composer install --prefer-dist --no-progress --no-suggest
+
+      - name: ⚙️ Copier le fichier .env
+        run: cp .env.example .env
+
+      - name: 🔐 Générer la clé d’application
+        run: php artisan key:generate
+
+      - name: 🧪 Lancer les migrations
+        run: php artisan migrate --force
+
+      - name: ✅ Lancer les tests
+        run: php artisan test
+
+      - name: 🔍 Analyse statique avec PHPStan
+        run: vendor/bin/phpstan analyse app --level=max
