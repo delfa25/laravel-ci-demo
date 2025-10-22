@@ -17,7 +17,7 @@ jobs:
       - name: 🧰 Installer PHP et Composer
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
+          php-version: '8.2'
           extensions: mbstring, pdo_mysql
           coverage: none
 
@@ -35,4 +35,3 @@ jobs:
 
       - name: ✅ Lancer les tests
         run: php artisan test
-
