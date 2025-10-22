@@ -36,5 +36,8 @@ jobs:
       - name: ✅ Lancer les tests
         run: php artisan test
 
+      - name: 🔍 Vérifier les fichiers PHPStan
+        run: ls -la vendor/bin
+
       - name: 🔍 Analyse statique avec PHPStan
         run: ./vendor/bin/phpstan analyse app --level=max
